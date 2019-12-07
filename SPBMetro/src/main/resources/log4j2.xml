@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <File name="inputStations" fileName="logs/InputStations.txt" immediateFlush = "false" >
+            <MarkerFilter marker="ALL_STATIONS" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="incorrectInputStations" fileName="logs/IncorrectInputStations.txt" immediateFlush = "false">
+            <MarkerFilter marker="TYPO_STATIONS" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="errors" fileName="logs/Errors.txt" immediateFlush = "false">
+            <MarkerFilter marker="ROUTE_ERRORS" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </appenders>
+    <loggers>
+        <root level="trace">
+            <appender-ref ref="inputStations" level="INFO"/>
+            <appender-ref ref="incorrectInputStations" level="WARN" />
+            <appender-ref ref="errors" level="ERROR"/>
+        </root>
+    </loggers>
+</configuration>
