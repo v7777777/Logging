@@ -23,12 +23,11 @@ public class Main
     public  static Marker markerTypoStations;
     public  static Marker markerRouteErrors;
 
-
     public static void main(String[] args)
     {
         RouteCalculator calculator = getRouteCalculator();
 
-        logger = LogManager.getRootLogger();
+        logger = LogManager.getLogger(Main.class);
         markerAllStations = MarkerManager.getMarker("ALL_STATIONS");
         markerTypoStations = MarkerManager.getMarker("TYPO_STATIONS");
         markerRouteErrors = MarkerManager.getMarker("ROUTE_ERRORS");
@@ -42,11 +41,9 @@ public class Main
 
             Station from = takeStation("Введите станцию отправления:");
 
-            logger.log(Level.INFO, markerAllStations, "введена станция отправления: " + from.getName());
-
             Station to = takeStation("Введите станцию назначения:");
 
-            logger.log(Level.INFO, markerAllStations, "введена станция назначения: " + to.getName());
+            logger.info(markerAllStations, "введены станция отправления {} станция назначения {}",from.getName(), to.getName());
 
             List<Station> route = calculator.getShortestRoute(from, to);
 
@@ -61,7 +58,7 @@ public class Main
 
         catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            logger.log(Level.ERROR, markerRouteErrors, "не удалось построить маршрут " + e.getMessage() );
+            logger.error(markerRouteErrors, "не удалось построить маршрут ", e );
 
         }
 
@@ -105,7 +102,7 @@ public class Main
                 return station;
             }
 
-            logger.log(Level.WARN, markerTypoStations, "станция не найдена: " + line);
+            logger.warn(markerTypoStations, "станция не найдена: " + line);
             System.out.println("Станция не найдена :(");
         }
     }
